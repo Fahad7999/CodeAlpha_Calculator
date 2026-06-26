@@ -1,0 +1,260 @@
+/* ─────────────────────────────────────────────
+   Reset & Base
+───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─────────────────────────────────────────────
+   Design Tokens
+───────────────────────────────────────────── */
+:root {
+  /* Palette */
+  --bg-page:        #0e1117;
+  --bg-calc:        #161b27;
+  --bg-display:     #0e1117;
+  --bg-num:         #1e2535;
+  --bg-num-hover:   #273047;
+  --bg-fn:          #252d3d;
+  --bg-fn-hover:    #2f3a50;
+  --bg-op:          #1a3a5c;
+  --bg-op-hover:    #1f4d7a;
+  --bg-op-active:   #ffffff;
+  --bg-eq:          #2563eb;
+  --bg-eq-hover:    #3b74f5;
+
+  --text-primary:   #f0f4ff;
+  --text-secondary: #6b7fa3;
+  --text-fn:        #a8b8d8;
+  --text-op:        #60a5fa;
+  --text-op-active: #1a3a5c;
+  --text-eq:        #ffffff;
+  --text-expression:#4a5e80;
+
+  --accent:         #2563eb;
+  --border:         #1f2d44;
+  --shadow:         0 24px 64px rgba(0, 0, 0, 0.6);
+
+  /* Typography */
+  --font-display:   'JetBrains Mono', monospace;
+  --font-ui:        'Inter', sans-serif;
+
+  /* Geometry */
+  --radius-calc:    20px;
+  --radius-btn:     10px;
+  --gap:            10px;
+}
+
+/* ─────────────────────────────────────────────
+   Layout
+───────────────────────────────────────────── */
+body {
+  background: var(--bg-page);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+}
+
+.wrapper {
+  padding: 20px;
+}
+
+.calculator {
+  width: 320px;
+  background: var(--bg-calc);
+  border-radius: var(--radius-calc);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────────
+   Display
+───────────────────────────────────────────── */
+.display {
+  background: var(--bg-display);
+  padding: 28px 24px 20px;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+  position: relative;
+}
+
+/* Signature element: running expression trail */
+.expression {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-expression);
+  min-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  transition: opacity 0.2s;
+}
+
+.result {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: -0.02em;
+  transition: font-size 0.1s ease;
+}
+
+/* Shrink font when number is long */
+.result.small  { font-size: 32px; }
+.result.xsmall { font-size: 24px; }
+
+.keyboard-hint {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  color: var(--text-expression);
+  opacity: 0.45;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* ─────────────────────────────────────────────
+   Button Grid
+───────────────────────────────────────────── */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  padding: var(--gap);
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s ease, transform 0.08s ease, color 0.12s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  user-select: none;
+}
+
+.btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.btn:active {
+  transform: scale(0.94);
+}
+
+/* Number buttons */
+.btn--num {
+  background: var(--bg-num);
+  color: var(--text-primary);
+}
+
+.btn--num:hover {
+  background: var(--bg-num-hover);
+}
+
+/* Wide zero button */
+.btn--wide {
+  grid-column: span 2;
+  justify-content: flex-start;
+  padding-left: 24px;
+}
+
+/* Function buttons (AC, +/−, %) */
+.btn--fn {
+  background: var(--bg-fn);
+  color: var(--text-fn);
+}
+
+.btn--fn:hover {
+  background: var(--bg-fn-hover);
+}
+
+/* Operator buttons */
+.btn--op {
+  background: var(--bg-op);
+  color: var(--text-op);
+  font-size: 22px;
+}
+
+.btn--op:hover {
+  background: var(--bg-op-hover);
+}
+
+/* Operator active state (selected operator) */
+.btn--op.active {
+  background: var(--bg-op-active);
+  color: var(--text-op-active);
+}
+
+.btn--op.active:hover {
+  background: #e8efff;
+}
+
+/* Equals button */
+.btn--eq {
+  background: var(--bg-eq);
+  color: var(--text-eq);
+  font-size: 22px;
+}
+
+.btn--eq:hover {
+  background: var(--bg-eq-hover);
+}
+
+/* ─────────────────────────────────────────────
+   Error State
+───────────────────────────────────────────── */
+.result.error {
+  color: #f87171;
+  font-size: 24px;
+}
+
+/* ─────────────────────────────────────────────
+   Responsive — very small screens
+───────────────────────────────────────────── */
+@media (max-width: 360px) {
+  .calculator {
+    width: 100%;
+  }
+
+  .btn {
+    height: 58px;
+    font-size: 16px;
+  }
+
+  .result {
+    font-size: 36px;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Reduced motion
+───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .btn, .result, .expression {
+    transition: none;
+  }
+}
