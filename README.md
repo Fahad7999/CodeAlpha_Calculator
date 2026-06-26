@@ -1,2 +1,13 @@
-# CodeAlpha_Calculator
-A clean, functional calculator with all arithmetic operations, keyboard support &amp; real-time display — built with HTML, CSS &amp; JavaScript.
+# Calculator
+
+A fully functional calculator built with vanilla HTML, CSS, and JavaScript.
+
+## Features
+- Arithmetic operations: addition, subtraction, multiplication, division
+- Real-time result display as you type
+- Clear and delete button support
+- Keyboard input support
+- Clean and responsive UI
+
+## Tech Stack
+HTML · CSS · JavaScript
